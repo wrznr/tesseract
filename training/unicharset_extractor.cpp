@@ -44,7 +44,7 @@ namespace tesseract {
 static void AddStringsToUnicharset(const GenericVector<STRING>& strings,
                                    int norm_mode, UNICHARSET* unicharset) {
   for (int i = 0; i < strings.size(); ++i) {
-    std::vector<string> normalized;
+    std::vector<std::string> normalized;
     if (NormalizeCleanAndSegmentUTF8(UnicodeNormMode::kNFC, OCRNorm::kNone,
                                      static_cast<GraphemeNormMode>(norm_mode),
                                      /*report_errors*/ true,
@@ -95,7 +95,9 @@ int Main(int argc, char** argv) {
 }  // namespace tesseract
 
 int main(int argc, char** argv) {
-  tesseract::ParseCommandLineFlags(argv[0], &argc, &argv, true);
+  if (argc > 1) {
+    tesseract::ParseCommandLineFlags(argv[0], &argc, &argv, true);
+  }
   if (argc < 2) {
     tprintf(
         "Usage: %s [--output_unicharset filename] [--norm_mode mode]"
